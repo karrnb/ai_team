@@ -1,0 +1,125 @@
+import random
+
+print ("enter the dimensions\n")
+dim = int(input ())
+
+print ("enter the probability of a cell being blocked\n")
+p= float(input ())
+
+flag=[]#flag values of all the cells
+path=0#a flag to know that the path is found and break out of the loop
+A = []#stack A
+final_path=[]#the final path traversed
+
+
+fringe_list=[]#initializing list to store possible fringe of every cell
+for i in range(dim**2):
+    fringe_list.append([])#creates a list of the fringe for every value of the current cell
+
+A.append(0)#initializing the stack with the starting cell that is 0
+
+# ---------Function starts------------ #
+
+def MazeGen(dim, p):#Generates a random maze
+    index=random.sample(range(1,(dim**2)-1), int(p*(dim**2)))
+    for i in range(dim**2):
+        if i in index:
+            flag.append(1)
+        else:
+            flag.append(0)
+    return flag
+    
+# ---------Function stops------------ #
+
+# ---------Function starts------------ #
+
+def track():#finds possible tracks
+    
+    var=A.pop(0)
+
+    while (var!=((dim**2)-1)):#till last cell is reached if it is possible to be reached
+    
+        print (var)#output the current cell 
+        
+        flag[var]=1#since we have visited the current cell, set the flag value 1 so that it is not included in the fringe of the child cell
+        
+        if var-1 not in A:
+            if (var%dim)!=0 and flag[var-1]==0:
+                A.append(var-1)
+                fringe_list[var].append(var-1)
+                
+        if var-dim not in A:
+            if (var-dim)>=0 and flag[var-dim]==0:
+                A.append(var-dim)
+                fringe_list[var].append(var-dim)
+                
+        if var+1 not in A:
+            if (var+1)%dim!=0 and flag[var+1]==0:
+                A.append(var+1)
+                fringe_list[var].append(var+1)
+                
+        if var+dim not in A:
+            if (var+dim)<=((dim**2)-1) and flag[var+dim]==0:
+                A.append(var+dim)
+                fringe_list[var].append(var+dim)
+       
+        if (len(A)>0):
+            var=A.pop(len(A)-1)
+        else:#stack is empty
+            print ("path not found")
+            break
+       
+    if (var==(dim**2)-1):#last cell is reached
+        print ("path is found")
+        global path
+        path=1
+       
+# ---------Function stops------------ #
+       
+# ---------Function starts------------ # 
+        
+def find_path():
+    k = dim**2-1
+    final_path.append(dim**2-1)
+
+    while (k!=0):
+
+        if (k+dim)<=((dim**2)-1):
+            if k in fringe_list[k+dim]:
+                final_path.append(k+dim)
+                k=k+dim
+
+        if (k+1)%dim!=0:
+            if k in fringe_list[k+1]:
+                final_path.append(k+1)
+                k=k+1
+
+        if (k-dim)>=0:
+            if k in fringe_list[k-dim]:
+                final_path.append(k-dim)
+                k=k-dim
+
+        if (k%dim)!=0:
+            if k in fringe_list[k-1]:
+                final_path.append(k-1)
+                k=k-1
+                
+# ---------Function stops------------ #     
+   
+
+# ---------Function calls------------ #
+
+flag=MazeGen(dim,p)#calling function to create the maze with (dim,p)
+
+track()# calling function to find possible paths
+
+if (path==1):#if path exists, it will get the path indices and store them in final_path
+    find_path()
+    final_path.reverse()
+
+
+
+       
+            
+            
+            
