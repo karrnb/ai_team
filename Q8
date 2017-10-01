@@ -1,0 +1,160 @@
+import random
+
+print ("enter the dimensions\n")
+dim = int(input ())
+
+index=[]
+FringeList=[]
+path=[]
+td=[]
+path_flag=""
+scoreList=[]
+count=0
+nodes_expanded=0
+first_quarter = dim**2/4
+three_quarter = 3*(dim**2)/4
+final_path_length=0
+
+
+
+def iniFL(k):
+    if len(FringeList)>0:
+        while len(FringeList)>0:
+            FringeList.pop(0)
+    for j in range(k**2):
+        FringeList.append([]) 
+        
+def initd(k):
+    for j in range(k**2):
+        td.append(0)
+
+def inisl(k):
+    for j in range(k**2):
+        scoreList.append(0)
+
+def MazeGen(a,b, p):
+    "Generates a random maze"
+    maze=[]
+    iniFL(dim)
+    initd(dim)
+    inisl(dim)
+    index=random.sample(range(int(a),int(b-2)), int(p*(b-a)))
+    #print(index)
+    for i in range(int(a-1),int(b)):
+        if i in index:
+            maze.append(1)
+        else:
+            maze.append(0)
+    return maze
+
+# ---------Function starts------------ #
+
+def CreateMaze(low_prob,high_prob):
+    flag1 = MazeGen(1,first_quarter,low_prob)
+
+    flag2 = MazeGen(first_quarter,three_quarter,high_prob)
+
+    flag3 = MazeGen(three_quarter,(dim**2)-1,low_prob)
+
+    final_flag = flag1 + flag2 + flag3
+    return final_flag 
+
+# ---------Function stops------------ #
+
+
+def parent(node):
+    "Returns parent node"
+    if node==0:
+        return 0
+    for a in FringeList:
+        if node in a:
+            return FringeList.index(a)
+
+def pathGen(c):
+    "displays a path"
+    pl=0
+    while c!=0:
+        #print(c)
+        pl+=1
+        c=parent(c)
+    return pl   
+ 
+    
+
+    
+def DFS_Agent(MAZE,n):
+    DFS_S=[0]
+    global nodes_expanded
+    nodes_expanded=0
+    while True:
+        if (n**2)-1 in DFS_S:
+            global path_flag
+            path_flag="path found"
+            break
+        elif len(DFS_S)==0:
+            path_flag="path not found"
+            break
+        else:
+            nodes_expanded=nodes_expanded+1
+            top=len(DFS_S)-1
+            temp=DFS_S[top]
+            DFS_S=DFS_S+Make_Fringe_DFS(MAZE,DFS_S,n)
+            MAZE[DFS_S[top]]=1
+            DFS_S.remove(temp)
+            #print(DFS_S)
+            #print(temp)
+    return temp
+    
+def Make_Fringe_DFS(MAZE,Qu,d):
+    "Generates a fringe for a given cell"
+    fringe=[]
+    TOP=len(Qu)-1
+    if (Qu[TOP]-d)>0:
+        if MAZE[Qu[TOP]-d]==0 and Qu[TOP]-d not in Qu:
+            fringe.append(Qu[TOP]-d)
+    if Qu[TOP]%d!=0:
+        if MAZE[Qu[TOP]-1]==0 and Qu[TOP]-1 not in Qu:
+            fringe.append(Qu[TOP]-1)
+    if (Qu[TOP]+d)<d**2:
+        if MAZE[Qu[TOP]+d]==0 and Qu[TOP]+d not in Qu:
+            fringe.append(Qu[TOP]+d)
+    if (Qu[TOP]+1)%d!=0:
+        if MAZE[Qu[TOP]+1]==0 and Qu[TOP]+1 not in Qu:
+            fringe.append(Qu[TOP]+1)
+    FringeList[Qu[TOP]]=fringe
+    return fringe    
+    
+
+  
+top_prob = 0.4
+middle_prob = 0.2
+
+difficulty_counter=0   
+while (difficulty_counter!=100) and (middle_prob<=1) and (top_prob<=1):
+    final_maze = CreateMaze(top_prob,middle_prob)
+
+    ltn=DFS_Agent(final_maze,dim)
+   
+    if path_flag=="path found":
+        top_prob = top_prob + 0.005
+        middle_prob = middle_prob + 0.01
+        difficulty_counter = 0
+        difficulty_counter=difficulty_counter+1
+    elif path_flag=="path not found":
+        difficulty_counter+=1
+
+
+
+
+final_maze = CreateMaze(top_prob,middle_prob)
+
+
+
+
+
+#final_maze has the array of the difficult maze.
+#top_prob= probability of the top and bottom sections 
+#middle_prob= probability of the middle section
+            
+    
+
