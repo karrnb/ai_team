@@ -9,6 +9,7 @@
 #usable_middle_prob-middle_prob at which a solvable maze could be created
 #FringeList-a list of the fringes generated for each explored cell
 #difficulty_counter-keeps a track of the number of maze configurations for which no path was found
+#scoreList-keeps a track of the heuristic scores of each node in the fringe of the expanded node
 
 import random
 

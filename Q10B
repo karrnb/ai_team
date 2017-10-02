@@ -20,7 +20,6 @@ FringeList=[]
 path=[]
 td=[]
 path_flag=""
-scoreList=[]
 count=0
 nodes_expanded=0
 first_quarter = dim**2/4
@@ -40,9 +39,6 @@ def initd(k):
     for j in range(k**2):
         td.append(0)
 
-def inisl(k):
-    for j in range(k**2):
-        scoreList.append(0)
 
 def MazeGen(a,b, p):
     "Generates a random maze"
