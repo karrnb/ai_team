@@ -31,6 +31,11 @@ final_path=[]
 saved_final_maze=[]
 
 
+
+# ---------Function definition starts------------ #
+
+# initializes the FringeList as an empty list of lists
+
 def iniFL(k):
     if len(FringeList)>0:
         while len(FringeList)>0:
@@ -38,13 +43,41 @@ def iniFL(k):
     for j in range(k**2):
         FringeList.append([]) 
         
+# ---------Function definition stops------------ #
+
+
+
+        
+# ---------Function definition starts------------ #
+
+# initializes the true distance value list as 0
+        
 def initd(k):
     for j in range(k**2):
         td.append(0)
+        
+# ---------Function definition stops------------ #
+
+
+
+        
+# ---------Function definition starts------------ #
+
+# initializes the scoreList as 0 for each potential cell
 
 def inisl(k):
     for j in range(k**2):
         scoreList.append(0)
+        
+# ---------Function definition stops------------ #
+
+
+
+        
+# ---------Function definition starts------------ #
+
+# Generates a random maze for cells starting from index a to index b
+# p is the probability of cells between index range (a,b) being blocked 
 
 def MazeGen(a,b, p):
     "Generates a random maze"
@@ -60,8 +93,16 @@ def MazeGen(a,b, p):
         else:
             maze.append(0)
     return maze
+    
+# ---------Function definition stops------------ #
 
-# ---------Function starts------------ #
+
+
+
+# ---------Function definition starts------------ #
+
+# Calls the function MazeGen() separately for the different partitions
+# Combines the partitions to create the final maze and returns as final_flag
 
 def CreateMaze(low_prob,high_prob):
     flag1 = MazeGen(1,first_quarter,low_prob)
@@ -73,8 +114,11 @@ def CreateMaze(low_prob,high_prob):
     final_flag = flag1 + flag2 + flag3
     return final_flag 
 
-# ---------Function stops------------ #
+# ---------Function definition stops------------ #
 
+
+
+# ---------Function definition starts------------ # 
 
 def parent(node):
     "Returns parent node"
@@ -83,6 +127,13 @@ def parent(node):
     for a in FringeList:
         if node in a:
             return FringeList.index(a)
+            
+# ---------Function definition stops------------ #
+            
+
+
+            
+# ---------Function definition starts------------ #
 
 def pathGen(c):
     global final_path
@@ -93,7 +144,13 @@ def pathGen(c):
         pl+=1
         c=parent(c)
     return pl   
+    
+# ---------Function definition stops------------ #
+
+
  
+    
+# ---------Function definition starts------------ #
 
 def h_md(n,dim):
     z=0
@@ -101,6 +158,13 @@ def h_md(n,dim):
     y = (n%dim)+1
     z = (dim-x) + (dim-y)
     return z
+    
+# ---------Function definition stops------------ #
+
+
+
+    
+# ---------Function definition starts------------ #
 
 def perm(F,dim): 
     score=0
@@ -123,7 +187,12 @@ def perm(F,dim):
                 c.append(k[0])
                 break
     return c
+    
+# ---------Function definition stops------------ #
 
+
+
+# ---------Function definition starts------------ #
     
 def Make_Fringe_AS(MAZE,Qu,d):
     "Generates a fringe for a given cell"
@@ -149,6 +218,12 @@ def Make_Fringe_AS(MAZE,Qu,d):
     FringeList[Qu[top]]=fringe
     return fringe
     
+    
+# ---------Function definition stops------------ #
+
+
+    
+# ---------Function definition starts------------ #
         
 def A_star(MAZE,dim):
     AQ=[0]
@@ -172,10 +247,10 @@ def A_star(MAZE,dim):
             #print(AQ)
     return(temp)
  
-
-
+# ---------Function definition stops------------ #
+    
  
-
+# ---------MAIN BODY OF THE CODE STARTS------------ #
   
 top_prob = 0.4
 middle_prob = 0.2
@@ -219,7 +294,7 @@ final_path_length = pathGen(ltn)+1
 final_path.reverse()
 
 
-            
+# ---------MAIN BODY OF THE CODE ENDS------------ #  
             
     
 

@@ -29,6 +29,9 @@ final_path_length=0
 final_path=[]
 
 
+# ---------Function definition starts------------ #
+
+# initializes the FringeList as an empty list of lists
 
 def iniFL(k):
     if len(FringeList)>0:
@@ -37,11 +40,27 @@ def iniFL(k):
     for j in range(k**2):
         FringeList.append([]) 
         
+# ---------Function definition stops------------ #
+        
+        
+
+
+# ---------Function definition starts------------ #
+
+# initializes the true distance value list as 0
+
 def initd(k):
     for j in range(k**2):
         td.append(0)
+        
+# ---------Function definition stops------------ #
 
 
+
+# ---------Function definition starts------------ #
+
+# Generates a random maze for cells starting from index a to index b
+# p is the probability of cells between index range (a,b) being blocked 
 
 def MazeGen(a,b, p):
     "Generates a random maze"
@@ -55,8 +74,15 @@ def MazeGen(a,b, p):
         else:
             maze.append(0)
     return maze
+    
+# ---------Function definition stops------------ #
+    
 
-# ---------Function starts------------ #
+
+# ---------Function definition starts------------ #
+
+# Calls the function MazeGen() separately for the different partitions
+# Combines the partitions to create the final maze and returns as final_flag
 
 def CreateMaze(low_prob,high_prob):
     flag1 = MazeGen(1,first_quarter,low_prob)
@@ -68,7 +94,13 @@ def CreateMaze(low_prob,high_prob):
     final_flag = flag1 + flag2 + flag3
     return final_flag 
 
-# ---------Function stops------------ #
+    
+# ---------Function definition stops------------ #
+
+
+
+
+# ---------Function definition starts------------ #
 
 
 def parent(node):
@@ -78,6 +110,14 @@ def parent(node):
     for a in FringeList:
         if node in a:
             return FringeList.index(a)
+            
+            
+# ---------Function definition stops------------ #
+            
+
+
+
+# ---------Function definition starts------------ #
 
 def pathGen(c):
     global final_path
@@ -88,7 +128,12 @@ def pathGen(c):
         pl+=1
         c=parent(c)
     return pl   
+    
+# ---------Function definition stops------------ #
  
+
+
+# ---------Function definition starts------------ #
     
 
     
@@ -113,6 +158,14 @@ def DFS_Agent(MAZE,n):
             DFS_S.remove(temp)
     return temp
     
+# ---------Function definition stops------------ #
+    
+    
+
+
+# ---------Function definition starts------------ #
+
+
 def Make_Fringe_DFS(MAZE,Qu,d):
     "Generates a fringe for a given cell"
     fringe=[]
@@ -132,7 +185,9 @@ def Make_Fringe_DFS(MAZE,Qu,d):
     FringeList[Qu[TOP]]=fringe
     return fringe    
     
+# ---------Function definition stops------------ #
 
+# ---------MAIN BODY OF THE CODE STARTS------------ #
   
 top_prob = 0.4
 middle_prob = 0.2
@@ -173,7 +228,7 @@ for i in FringeList:
 final_path_length = pathGen(ltn)+1
 final_path.reverse()
 
-            
+# ---------MAIN BODY OF THE CODE ENDS------------ #
             
     
 
