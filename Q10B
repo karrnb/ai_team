@@ -1,3 +1,14 @@
+#input: the dimension for which you find to find a hard maze Eg:enter 10 to get a 10X10 hard maze
+#(final_path_length)-length of the solution path
+#(nodes_expanded)-total nodes expanded during runtime
+#(max_fringe_size)-maximum size of the fringelist
+#(final_path)-solution path traversed without
+#top_prob-probability of cell being blocked from 1 to dim^2/4 and from 3dim^2/4+1 to dim^2
+#middle_prob-probability of cell being blocked from dim^2/4+1 to 3dim^2/4
+#usable_top_prob-top_prob at which a solvable maze could be created
+#usable_middle_prob-middle_prob at which a solvable maze could be created
+#FringeList-a list of the fringes generated for each explored cell
+
 import random
 
 print ("enter the dimensions\n")
@@ -94,7 +105,6 @@ def Make_Fringe_BFS(MAZE,Qu,d):
     if Qu[0]%d!=0:
         if MAZE[Qu[0]-1]==0 and Qu[0]-1 not in Qu:
             fringe.append(Qu[0]-1)
-    #print(fringe)
     FringeList[Qu[0]]=fringe
     return fringe
     
@@ -140,23 +150,14 @@ while (difficulty_counter!=100) and (middle_prob<=1) and (top_prob<=1):
         difficulty_counter+=1
 
 
-print ("difficult path found")
 
 final_maze = CreateMaze(top_prob,middle_prob)
 
-k=0
-for i in range(dim**2):
-    if (k==dim):
-        print ("\n")
-        k=0
-    print (final_maze[i], end=' ')
-    k+=1
-print ("\n")
+
 
 usable_top_prob = top_prob - 0.005
 usable_middle_prob = middle_prob - 0.01
 
-print (usable_top_prob,usable_middle_prob)
 
 while (path_flag!="path found"):
     
@@ -169,10 +170,7 @@ for i in FringeList:
     
 final_path_length = pathGen(ltn)+1
 final_path.reverse()
-print (final_path_length)#length of the solution path
-print (nodes_expanded)#total nodes expanded during runtime
-print (max_fringe_size)#maximum size of the fringelist 
-print (final_path)#solution path traversed without 0 and 99
+
 
             
             

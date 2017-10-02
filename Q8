@@ -1,3 +1,14 @@
+#input: the dimension for which you find to find a hard maze Eg:enter 10 to get a 10X10 hard maze
+#(final_path_length)-length of the solution path
+#(nodes_expanded)-total nodes expanded during runtime
+#(max_fringe_size)-maximum size of the fringelist
+#(final_path)-solution path traversed without
+#top_prob-probability of cell being blocked from 1 to dim^2/4 and from 3dim^2/4+1 to dim^2
+#middle_prob-probability of cell being blocked from dim^2/4+1 to 3dim^2/4
+#usable_top_prob-top_prob at which a solvable maze could be created
+#usable_middle_prob-middle_prob at which a solvable maze could be created
+#FringeList-a list of the fringes generated for each explored cell
+
 import random
 
 print ("enter the dimensions\n")
@@ -74,7 +85,6 @@ def pathGen(c):
     "displays a path"
     pl=0
     while c!=0:
-        #print(c)
         pl+=1
         c=parent(c)
     return pl   
@@ -101,8 +111,6 @@ def DFS_Agent(MAZE,n):
             DFS_S=DFS_S+Make_Fringe_DFS(MAZE,DFS_S,n)
             MAZE[DFS_S[top]]=1
             DFS_S.remove(temp)
-            #print(DFS_S)
-            #print(temp)
     return temp
     
 def Make_Fringe_DFS(MAZE,Qu,d):
@@ -124,7 +132,6 @@ def Make_Fringe_DFS(MAZE,Qu,d):
     FringeList[Qu[TOP]]=fringe
     return fringe    
     
-
   
 top_prob = 0.4
 middle_prob = 0.2
@@ -152,9 +159,6 @@ final_maze = CreateMaze(top_prob,middle_prob)
 
 
 
-#final_maze has the array of the difficult maze.
-#top_prob= probability of the top and bottom sections 
-#middle_prob= probability of the middle section
             
     
 
