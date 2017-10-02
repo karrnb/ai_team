@@ -45,7 +45,6 @@ def MazeGen(a,b, p):
     maze=[]
     iniFL(dim)
     initd(dim)
-    inisl(dim)
     index=random.sample(range(int(a),int(b-2)), int(p*(b-a)))
     for i in range(int(a-1),int(b)):
         if i in index:

@@ -52,7 +52,7 @@ def MazeGen(a,b, p):
     initd(dim)
     inisl(dim)
     index=random.sample(range(int(a),int(b-2)), int(p*(b-a)))
-    #print(index)
+
     for i in range(int(a-1),int(b)):
         if i in index:
             maze.append(1)
