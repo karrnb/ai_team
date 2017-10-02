@@ -80,17 +80,22 @@ def find_path():
                 k=k-1                
 # ---------Function stops------------ #
 
+# Standard update function for animation
+# Uses path generated to plot as an animation in the maze
+# accepts i as an integer for index on iterations
+# returns nothing
 def update(i):
-    # i+=1
-    # print(initial_maze)
-    # print(convertMaze(dim, initial_maze))
     temp_maze = initial_maze
-    temp_maze[final_path[i]] = 0.6
-    # print(convertMaze(dim, temp_maze))
+    # set the path to be displayed as a frame of animation
+    temp_maze[final_path[i]] = 0.25
+    # set matrice with updated values
     matrice.set_array(convertMaze(dim, temp_maze))
 
+# Generates a random maze of dim*dim with blocks of probability p
+# accepts dim: dimension of maze and p: probability of blocks in the maze
+# returns a 1D array with obstacles to mimic a maze
 def MazeGen(dim, p):
-    "Generates a random maze"
+    # generates indices for blocks in a maze
     index=random.sample(range(1,(dim**2)-1), int(p*(dim**2)))
     #print(index)
     maze=[]
@@ -100,11 +105,15 @@ def MazeGen(dim, p):
         else:
             maze.append(0)
     return maze
-    # return np.array_split(maze, dim)
 
+# Converting maze array into 2D array for visualization
+# accepts dim: dimension of dim*dim array and maze: array of maze
+# returns 2D array
 def convertMaze(dim, maze):
     return np.array_split(maze, dim)
 
+# common function to load DFS steps
+# returns no value
 def generate_dfs():
     # calling function to find possible paths
     track()
@@ -115,6 +124,7 @@ def generate_dfs():
 ##Step 1
 #flag values of all the cells
 flag=[]
+initial_maze=[]
 #a flag to know that the path is found and break out of the loop
 path=0
 #stack A
@@ -122,7 +132,7 @@ A = []
 #the final path traversed
 final_path=[]
 #setting values for dim and p
-dim, p = 20, 0.2
+dim, p = 100, 0.2
 
 #initializing list to store possible fringe of every cell
 fringe_list=[]
@@ -132,23 +142,28 @@ for i in range(dim**2):
     fringe_list.append([])
 
 #calling function to create the maze with (dim,p)
-initial_maze =  MazeGen(dim,p)
-flag = copy.deepcopy(initial_maze)
+flag =  MazeGen(dim,p)
+# creating a copy of the maze to use for visualization
+initial_maze = copy.deepcopy([x if x == 0 else 0.4 for x in flag])
 
 ##Step 2
 generate_dfs()
 
-
 ##Step Last
-# generating visualizations starts here
-# initializing graph variables
-fig, ax = plt.subplots()
+if (path==1):
+    # generating visualizations starts here
+    # initializing graph variables
+    fig, ax = plt.subplots()
+    # building the initial maze
+    matrice = ax.matshow(convertMaze(dim, initial_maze),cmap=cm.nipy_spectral)
+    # removing axes and legends from the map
+    plt.axis('off')
+    ax.legend_ = None
 
-# matrice = ax.matshow(convertMaze(dim, initial_maze),cmap=cm.red)
-matrice = ax.matshow(convertMaze(dim, initial_maze))
-# plt.colorbar(matrice)
-plt.axis('off')
-
-ani = animation.FuncAnimation(fig, update, frames=(len(final_path)), interval=100)
-ax.legend_ = None
-plt.show()
+    # running the animation function
+    # fig: graph variable, update: update function to change map, 
+    # frames: count of animations, interval: frequency of frames
+    ani = animation.FuncAnimation(fig, update, frames=(len(final_path)), interval=100)
+    
+    # display the animation
+    plt.show()
