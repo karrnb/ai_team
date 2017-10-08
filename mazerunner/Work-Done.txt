@@ -1,0 +1,5 @@
+Karansingh Banga (kb868) - visualization of the path traversal and respective map configurations for each search algorithm in Part 1 and Part 2.
+
+Deeptanshu Singh (ds1489) - implementation of DFS, BFS and A*(with heuristic functions as Euclidean Distance and Manhattan Distance) in Part 1. In addition to that, answers to questions in the Part 1 of the assignment.
+
+Arshpreet Singh Pabla (asp229) - implementation of Genetic Algorithm to develop a hard to solve maze for each of the search algorithms: DFS, BFS and A*(with heuristic functions as Euclidean Distance and Manhattan Distance) in Part 2. In addition to that, answers to questions in the Part 2 of the assignment.
